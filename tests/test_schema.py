@@ -83,3 +83,11 @@ def test_not_valid_boarding_card_schema(valid_boarding_card_stack):
     with pytest.raises(ValidationError) as errinfo:
         BoardingCardSchema().load(not_valid_dict)
     assert ValidationError_message_dict == errinfo.value.messages
+
+
+def test_valid_boarding_cards_stack_schema(valid_boarding_card_stack):
+    deserialized_obj = BoardingCardsStackSchema().load(valid_boarding_card_stack)
+
+    assert deserialized_obj.stack[0].transportation.__dict__ == valid_boarding_card_stack["stack"][0]['transportation']
+    assert deserialized_obj.stack[0].destination.__dict__ == valid_boarding_card_stack["stack"][0]['destination']
+    assert deserialized_obj.stack[0].departure.__dict__ == valid_boarding_card_stack["stack"][0]['departure']
