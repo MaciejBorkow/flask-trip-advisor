@@ -57,3 +57,4 @@ def test_not_valid_transportation_schema():
     with pytest.raises(ValidationError) as errinfo:
         TransportationSchema().load(not_valid_dict)
     assert ValidationError_message_dict == errinfo.value.messages
+

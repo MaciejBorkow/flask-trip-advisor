@@ -21,3 +21,23 @@ class TransportationSchema(Schema):
     def make_object(self, data, **kwargs):
         return Transportation(**data)
 
+
+class BoardingCardSchema(Schema):
+    transportation = fields.Nested(TransportationSchema, required=True)
+    departure = fields.Nested(SpotScheme, required=True)
+    destination = fields.Nested(SpotScheme, required=True)
+
+    @post_load
+    def make_object(self, data, **kwargs):
+        return BoardingCard(**data)
+
+
+class BoardingCardsStackSchema(Schema):
+    stack = fields.List(fields.Nested(BoardingCardSchema))
+
+    @post_load
+    def make_object(self, data, **kwargs):
+        return BoardingCardsStack(**data)
+
+
+boarding_cards_stack_schema = BoardingCardsStackSchema()
