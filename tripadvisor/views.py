@@ -2,14 +2,19 @@ from marshmallow import ValidationError
 from flask import request, Blueprint
 from flask.views import MethodView
 
+from tripadvisor.schema import boarding_cards_stack_schema
+
 
 bp_boardin_cards = Blueprint('boardin_cards', __name__)
 
 
 class BoardingCardsAPI(MethodView):
     def post(self):
-
-        return {'data': 'init data'}
+        # try:
+        data = boarding_cards_stack_schema.load(request.json)
+        # except ValidationError as e:
+        #     return e.messages, 400
+        return data
 
 
 bp_boardin_cards.add_url_rule(
