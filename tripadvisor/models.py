@@ -50,3 +50,15 @@ class BoardingCard:
         :return: verbose description
         """
         return ""
+
+
+class BoardingCardsStack:
+    """Represent BoardingCards list and give interface to operate on them."""
+    def __init__(self, stack: List[BoardingCard]):
+        self.stack = stack
+
+    def sort(self):
+        """
+        Sort boarding cards stack.
+        """
+        pass
