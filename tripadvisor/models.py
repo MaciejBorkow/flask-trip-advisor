@@ -33,3 +33,20 @@ class Transportation:
         self.description = description
         self.identifier = identifier
 
+class BoardingCard:
+    """
+    BoardingCard describing how to get from Spot A to B by a Transportation
+    """
+    def __init__(self, transportation: Transportation, departure: Spot, destination: Spot):
+        """Look to objects description from type hints."""
+        self.transportation = transportation
+        self.departure = departure
+        self.destination = destination
+        self.verbose = self._serialize()
+
+    def _serialize(self):
+        """
+        Serialize boarding verbose description readable for humans.
+        :return: verbose description
+        """
+        return ""
