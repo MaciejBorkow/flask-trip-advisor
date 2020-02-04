@@ -10,3 +10,5 @@ class SpotScheme(Schema):
     @post_load
     def make_object(self, data, **kwargs):
         return Spot(**data)
+
+
