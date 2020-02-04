@@ -1,8 +1,8 @@
 import pytest
 from marshmallow import ValidationError
 
-from tripadvisor.schema import SpotScheme, TransportationSchema
-from tripadvisor.models import Spot, Transportation, BoardingCard, BoardingCardsStack
+from tripadvisor.schema import SpotScheme, TransportationSchema, BoardingCardSchema, BoardingCardsStackSchema
+from tripadvisor.models import BoardingCard
 
 
 def test_valid_spot_schema():
@@ -58,3 +58,28 @@ def test_not_valid_transportation_schema():
         TransportationSchema().load(not_valid_dict)
     assert ValidationError_message_dict == errinfo.value.messages
 
+
+def test_valid_boarding_card_schema(valid_boarding_card_stack):
+    valid_dict = valid_boarding_card_stack["stack"][0]
+    deserialized_obj = BoardingCardSchema().load(valid_dict)
+    assert isinstance(deserialized_obj, BoardingCard)
+    assert deserialized_obj.transportation.__dict__ == valid_dict["transportation"]
+    assert deserialized_obj.departure.__dict__ == valid_dict["departure"]
+    assert deserialized_obj.destination.__dict__ == valid_dict["destination"]
+
+
+def test_not_valid_boarding_card_schema(valid_boarding_card_stack):
+    not_valid_dict = valid_boarding_card_stack["stack"][0]
+    del not_valid_dict['transportation']
+    del not_valid_dict['departure']
+    not_valid_dict['random_key'] = 'random_value'
+    not_valid_dict['destination'] = 1
+    ValidationError_message_dict = {
+        'departure': ['Missing data for required field.'],
+        'transportation': ['Missing data for required field.'],
+        'random_key': ['Unknown field.'],
+        'destination': {'_schema': ['Invalid input type.']},
+    }
+    with pytest.raises(ValidationError) as errinfo:
+        BoardingCardSchema().load(not_valid_dict)
+    assert ValidationError_message_dict == errinfo.value.messages
