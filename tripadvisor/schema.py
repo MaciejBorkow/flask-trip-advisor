@@ -12,3 +12,12 @@ class SpotScheme(Schema):
         return Spot(**data)
 
 
+class TransportationSchema(Schema):
+    category = fields.Str(required=True, validate=validate.OneOf(Transportation.categories))
+    description = fields.Str(validate=validate.Length(max=200))
+    identifier = fields.Str(validate=validate.Length(max=200))
+
+    @post_load
+    def make_object(self, data, **kwargs):
+        return Transportation(**data)
+
