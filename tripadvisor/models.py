@@ -9,11 +9,9 @@ class Spot:
         """
         :param address: address of place
         :param identifier: some specific identifier eg. gate 43 at airport, train platform 2
-        :param baggage: place where baggage can be left
         """
         self.address = address
         self.identifier = identifier
-        self.baggage = baggage
 
 
 class Transportation:
@@ -23,15 +21,19 @@ class Transportation:
 
     categories = ['train', 'flight', 'bus']  # acceptable types of transportation
 
-    def __init__(self, category: categories, description: str = "", identifier: str = ""):
+    def __init__(self, category: categories, description: str = "", identifier: str = "", seat: str = "", baggage=""):
         """
         :param category: on of acceptable transportation type from Class variable 'categories'
-        :param description: additional information eg. city (for bus), charter (for plain)
+        :param description: additional information eg. city (for bus), charter (for flight)
         :param identifier: to help find the transportation eg. bus plates, plain number
+        :param seat: place where to sit during locomotion
+        :param baggage: where to leave
         """
         self.category = category
         self.description = description
         self.identifier = identifier
+        self.seat = seat
+        self.baggage = baggage
 
 class BoardingCard:
     """
@@ -49,7 +51,25 @@ class BoardingCard:
         Serialize boarding verbose description readable for humans.
         :return: verbose description
         """
-        return ""
+        if self.transportation.category in ('train', 'bus'):
+            article = "" if self.transportation.identifier else "the "
+            verbose = f"Take {article}{self.transportation.description} {self.transportation.category} " \
+                      f"{self.transportation.identifier} from {self.departure.address} to {self.destination.address}."
+            verbose += f" Sit in seat {self.transportation.seat}" if self.transportation.seat else " No seat assignment."
+        elif self.transportation.category == 'flight':
+            article = "" if self.transportation.identifier else "the "
+            verbose = f"From {self.departure.address}, take {article}{self.transportation.category}"
+            verbose += f" {self.transportation.identifier}" if self.transportation.identifier else ""
+            verbose += f" to {self.destination.address}."
+            verbose += f" Gate {self.transportation.identifier}, seat {self.transportation.seat}"
+            if self.transportation.baggage:
+                verbose += f" Baggage drop at ticket counter {self.transportation.baggage}."
+            else:
+                verbose += " Baggage will we automatically transferred from your last leg."
+        return verbose
+
+class BoardingCardSerializer:
+
 
 
 class BoardingCardsStack:

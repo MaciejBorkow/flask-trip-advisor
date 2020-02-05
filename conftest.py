@@ -21,34 +21,34 @@ def valid_boarding_card_stack():
             "transportation": {
                 'category': 'train',
                 'description': 'airport',
-                'identifier': '123'
+                'identifier': '123',
+                'seat': '32A',
+                'baggage': '123'
             },
             "departure": {
                 "address": "Dworzec Głowny, Poznan, Poland",
                 "identifier": "peron 7",
-                "baggage": "u kierowcy"
             },
             "destination": {
                 "address": "Dworzec Głowny, Warszawa, Poland",
                 "identifier": "peron 12",
-                "baggage": "u kierowcy"
             }
         },
         {
             "transportation": {
                 'category': 'train',
                 'description': 'airport',
-                'identifier': '123'
+                'identifier': '123',
+                'seat': '32A',
+                'baggage': '123'
             },
             "departure": {
                 "address": "Dworzec Głowny, Poznan, Poland",
                 "identifier": "peron 7",
-                "baggage": "u kierowcy"
             },
             "destination": {
                 "address": "Dworzec Głowny, Warszawa, Poland",
                 "identifier": "peron 12",
-                "baggage": "u kierowcy"
             }
         }]
     }
