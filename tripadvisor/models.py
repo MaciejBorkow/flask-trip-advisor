@@ -56,28 +56,8 @@ class BoardingCard:
 
     def serialize(self, serializer):
         serializer.from_to(self.departure, self.destination, self.transportation)
-        serializer.where_start_and_seat(self.transportation)
+        serializer.where_start_and_seat(self.transportation, self.departure)
         serializer.baggage(self.transportation.baggage)
-
-    # def _serialize(self):
-    #     """
-    #     Serialize boarding verbose description readable for humans.
-    #     :return: verbose description
-    #     """
-    #     if self.transportation.category in ('train', 'bus'):
-    #         article = "" if self.transportation.identifier else "the "
-    #         verbose = f"Take {article}{self.transportation.description} {self.transportation.category} " \
-    #                   f"{self.transportation.identifier} from {self.departure.address} to {self.destination.address}."
-    #         verbose += f" Sit in seat {self.transportation.seat}" if self.transportation.seat else " No seat assignment."
-    #     elif self.transportation.category == 'flight':
-    #
-    #         verbose = f"From {self.departure.address}, take {self.transportation.category} to {self.destination.address}."
-    #         verbose += f" Gate {self.transportation.identifier}, seat {self.transportation.seat}"
-    #         if self.transportation.baggage:
-    #             verbose += f" Baggage drop at ticket counter {self.transportation.baggage}."
-    #         else:
-    #             verbose += " Baggage will we automatically transferred from your last leg."
-    #     return verbose
 
 
 class BoardingCardsStack:
