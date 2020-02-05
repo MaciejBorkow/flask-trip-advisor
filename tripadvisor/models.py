@@ -46,7 +46,13 @@ class BoardingCard:
         self.transportation = transportation
         self.departure = departure
         self.destination = destination
-        self.verbose = BoardingCard._serializer.serialize(self, transportation.category)
+        self.verbose = BoardingCard._serializer.serialize(self, self.transportation.category)
+
+    # @property
+    # def verbose(self):
+    #     if not self.verbose:
+    #         self.verbose = BoardingCard._serializer.serialize(self, self.transportation.category)
+    #     return self.verbose
 
     def serialize(self, serializer):
         serializer.from_to(self.departure, self.destination, self.transportation)

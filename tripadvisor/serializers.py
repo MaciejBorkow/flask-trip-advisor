@@ -24,15 +24,15 @@ class TrainSerializer(AbstractSerializer):
         self._verbose = None
 
     def from_to(self, departure, destination, transportation):
-        article = "" if self.transportation.identifier else "the "
+        article = "" if transportation.identifier else "the "
         self._verbose = f"Take {article}{transportation.description} {transportation.category} " \
                         f"{transportation.identifier} from {departure.address} to {destination.address}."
 
     def where_start_and_seat(self, transportation):
-        self._verbose += f" Sit in seat {transportation.seat}" if transportation.seat else " No seat assignment."
+        self._verbose += f" Sit in seat {transportation.seat}." if transportation.seat else " No seat assignment."
 
-    def baggage(self, transportation):
-        self._verbose += f" Baggage drop at {transportation.baggage}." if transportation.baggage else ""
+    def baggage(self, baggage):
+        self._verbose += f" Baggage drop at {baggage}." if baggage else ""
 
     def to_str(self):
         return self._verbose
@@ -43,15 +43,15 @@ class BusSerializer(AbstractSerializer):
         self._verbose = None
 
     def from_to(self, departure, destination, transportation):
-        article = "" if self.transportation.identifier else "the "
+        article = "" if transportation.identifier else "the "
         self._verbose = f"Take {article}{transportation.description} {transportation.category} " \
                         f"{transportation.identifier} from {departure.address} to {destination.address}."
 
     def where_start_and_seat(self, transportation):
-        self._verbose += f" Sit in seat {transportation.seat}" if transportation.seat else " No seat assignment."
+        self._verbose += f" Sit in seat {transportation.seat}." if transportation.seat else " No seat assignment."
 
-    def baggage(self, transportation):
-        self._verbose += f" Baggage drop at {transportation.baggage}." if transportation.baggage else ""
+    def baggage(self, baggage):
+        self._verbose += f" Baggage drop at {baggage}." if baggage else ""
 
     def to_str(self):
         return self._verbose
@@ -65,11 +65,11 @@ class FlightSerializer(AbstractSerializer):
         self._verbose = f"From {departure.address}, take {transportation.category} to {destination.address}."
 
     def where_start_and_seat(self, transportation):
-        self._verbose += f" Gate {transportation.identifier}, seat {transportation.seat}"
+        self._verbose += f" Gate {transportation.identifier}, seat {transportation.seat}."
 
-    def baggage(self, transportation):
-        if self.transportation.baggage:
-            self._verbose += f" Baggage drop at ticket counter {transportation.baggage}."
+    def baggage(self, baggage):
+        if self.baggage:
+            self._verbose += f" Baggage drop at ticket counter {baggage}."
         else:
             self._verbose += " Baggage will we automatically transferred from your last leg."
 
