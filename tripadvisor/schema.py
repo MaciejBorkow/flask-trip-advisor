@@ -33,10 +33,6 @@ class BoardingCardSchema(Schema):
     def make_object(self, data, **kwargs):
         return BoardingCard(**data)
 
-    @pre_dump
-    def serialize_object(self, obj):
-        return obj.__dict__
-
 
 class BoardingCardsStackSchema(Schema):
     stack = fields.List(fields.Nested(BoardingCardSchema))
@@ -44,10 +40,6 @@ class BoardingCardsStackSchema(Schema):
     @post_load
     def make_object(self, data, **kwargs):
         return BoardingCardsStack(**data)
-
-    @pre_dump
-    def serialize_object(self, obj):
-        return obj.__dict__
 
 
 boarding_cards_stack_schema = BoardingCardsStackSchema()

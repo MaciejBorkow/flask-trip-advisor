@@ -10,11 +10,12 @@ bp_boardin_cards = Blueprint('boardin_cards', __name__)
 
 class BoardingCardsAPI(MethodView):
     def post(self):
-        # try:
-        data = boarding_cards_stack_schema.load(request.json)
-        # except ValidationError as e:
-        #     return e.messages, 400
-        return {'test': 'test'}
+        try:
+            data_in = boarding_cards_stack_schema.load(request.json)
+        except ValidationError as e:
+            return e.messages, 400
+        data_out = boarding_cards_stack_schema.dump(data_in)
+        return data_out
 
 
 bp_boardin_cards.add_url_rule(
