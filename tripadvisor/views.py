@@ -14,7 +14,7 @@ class BoardingCardsAPI(MethodView):
         data = boarding_cards_stack_schema.load(request.json)
         # except ValidationError as e:
         #     return e.messages, 400
-        return data
+        return {'test': 'test'}
 
 
 bp_boardin_cards.add_url_rule(
