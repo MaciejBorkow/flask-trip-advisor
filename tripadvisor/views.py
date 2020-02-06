@@ -11,10 +11,12 @@ bp_boardin_cards = Blueprint('boardin_cards', __name__)
 class BoardingCardsAPI(MethodView):
     def post(self):
         try:
-            data_in = boarding_cards_stack_schema.load(request.json)
+            boarding_cards_stack = boarding_cards_stack_schema.load(request.json)
         except ValidationError as e:
             return e.messages, 400
-        data_out = boarding_cards_stack_schema.dump(data_in)
+        boarding_cards_stack.sort()
+        data_out = boarding_cards_stack_schema.dump(boarding_cards_stack)
+        data_out['stack'].append({'verbose': 'You have arrived at your final destination.'})
         return data_out
 
 
