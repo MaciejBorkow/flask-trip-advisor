@@ -183,4 +183,27 @@ Flask app to plan a trip by sorting boarding cards.
         }
         ]
     }
-```    
+```
+
+Shall respon with the json:
+```json
+{
+    "stack": [
+        {
+            "verbose": "Take train 78A from Madrid to Barcelona. Sit in seat 45B."
+        },
+        {
+            "verbose": "Take the airport bus from Barcelona to Girona Airport. No seat assignment."
+        },
+        {
+            "verbose": "From Girona Airport, take flight SK455 to Stockholm. Gate 45B, seat 3A. Baggage drop at ticket counter 344."
+        },
+        {
+            "verbose": "From Stockholm, take flight SK22 to New York JFK. Gate 22, seat 7B. Baggage will we automatically transferred from your last leg."
+        },
+        {
+            "verbose": "You have arrived at your final destination."
+        }
+    ]
+}
+```
