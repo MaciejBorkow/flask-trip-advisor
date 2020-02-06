@@ -21,5 +21,5 @@ class BoardingCardsAPI(MethodView):
 
 
 bp_boardin_cards.add_url_rule(
-    'BoardingCards/sort', view_func=BoardingCardsAPI.as_view('boarding_cards')
+    'boardingcards', view_func=BoardingCardsAPI.as_view('boarding_cards')
 )

@@ -12,7 +12,7 @@ def test_boarding_cards_stack_POST(client, valid_boarding_card_stack_from_recrui
         "You have arrived at your final destination."
     ]
     response_json = {'stack':[{'verbose': bc}for bc in output]}
-    rv = client.post('/api/BoardingCards/sort',
+    rv = client.post('/api/boardingcards',
                      json=valid_boarding_card_stack_from_recruitment_task)
     json_data = rv.get_json()
     assert json_data == response_json
