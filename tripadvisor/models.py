@@ -1,4 +1,5 @@
 from typing import List
+from _collections import deque
 
 from tripadvisor.serializers import BoardingCardDescriptionSerializer
 
@@ -69,4 +70,32 @@ class BoardingCardsStack:
         """
         Sort boarding cards stack.
         """
-        pass
+        l_nodes = [(obj.departure.address, obj.destination.address) for obj in self.stack]
+        l_nodes_in = [obj.departure.address for obj in self.stack]
+        l_nodes_out = [obj.destination.address for obj in self.stack]
+
+        def find_nodes(ind_sort, previous=False):
+            if previous:
+                base_node_to_compare = l_nodes_in[ind_sort[0]]
+                node_indx_to_iter = l_nodes_out
+            else:
+                base_node_to_compare = l_nodes_out[ind_sort[-1]]
+                node_indx_to_iter = l_nodes_in
+            nodes_index = [ni for ni, n in enumerate(node_indx_to_iter) if
+                           n == base_node_to_compare and ni not in ind_sort]
+
+            if nodes_index and previous:
+                ind_sort.appendleft(nodes_index[0])
+                return find_nodes(ind_sort, previous=True)
+            elif nodes_index and not previous:
+                ind_sort.append(nodes_index[0])
+                return find_nodes(ind_sort)
+            elif len(ind_sort) < len(l_nodes) and not previous:
+                return find_nodes(ind_sort, previous=True)
+            elif len(ind_sort) == len(l_nodes):
+                return ind_sort
+            else:
+                return ind_sort
+
+        indexes_sorted = find_nodes(deque([0]))
+        self.stack = [self.stack[i] for i in indexes_sorted]
